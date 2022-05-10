@@ -1,4 +1,4 @@
-module Example exposing (suite)
+module OrderTests exposing (suite)
 
 import Expect
 import Order
@@ -82,5 +82,41 @@ suite =
                 \_ ->
                     order.lesser A A
                         |> Expect.equal A
+            ]
+        , describe ".greatest"
+            [ test "returns Nothing for empty list" <|
+                \_ ->
+                    order.greatest []
+                        |> Expect.equal Nothing
+            , test "returns first item when it is the greatest" <|
+                \_ ->
+                    order.greatest [ B, A ]
+                        |> Expect.equal (Just B)
+            , test "returns second item when it is the greatest" <|
+                \_ ->
+                    order.greatest [ A, C, B ]
+                        |> Expect.equal (Just C)
+            , test "returns first item when all items are equal" <|
+                \_ ->
+                    order.greatest [ A, A, A ]
+                        |> Expect.equal (Just A)
+            ]
+        , describe ".least"
+            [ test "returns Nothing for empty list" <|
+                \_ ->
+                    order.least []
+                        |> Expect.equal Nothing
+            , test "returns first item when it is the least" <|
+                \_ ->
+                    order.least [ A, B ]
+                        |> Expect.equal (Just A)
+            , test "returns second item when it is the least" <|
+                \_ ->
+                    order.least [ C, A, B ]
+                        |> Expect.equal (Just A)
+            , test "returns first item when all items are equal" <|
+                \_ ->
+                    order.least [ A, A, A ]
+                        |> Expect.equal (Just A)
             ]
         ]
