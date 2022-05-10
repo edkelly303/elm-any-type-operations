@@ -13,7 +13,7 @@ type A
 
 enum : Enum.Interface A
 enum =
-    Enum.makeInterface A [ B, C ]
+    Enum.makeInterface A B [ C ]
 
 
 suite : Test
