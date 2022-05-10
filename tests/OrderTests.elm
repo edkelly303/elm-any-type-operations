@@ -24,12 +24,13 @@ toInt x =
             3
 
 
+order : Order.Interface A Int
+order =
+    Order.makeInterface toInt
+
+
 suite : Test
 suite =
-    let
-        order =
-            Order.makeInterface toInt
-    in
     describe "Order"
         [ describe ".op"
             [ test "(==) returns True when arguments are equal" <|
@@ -40,6 +41,54 @@ suite =
                 \_ ->
                     order.op A (==) B
                         |> Expect.equal False
+            , test "(/=) returns False when arguments are equal" <|
+                \_ ->
+                    order.op A (/=) A
+                        |> Expect.equal False
+            , test "(/=) returns True when arguments are not equal" <|
+                \_ ->
+                    order.op A (/=) B
+                        |> Expect.equal True
+            , test "(>) returns True when arg1 is greater than arg2" <|
+                \_ ->
+                    order.op B (>) A
+                        |> Expect.equal True
+            , test "(>) returns False when arg1 is less than arg2" <|
+                \_ ->
+                    order.op A (>) B
+                        |> Expect.equal False
+            , test "(<) returns False when arg1 is greater than arg2" <|
+                \_ ->
+                    order.op B (<) A
+                        |> Expect.equal False
+            , test "(<) returns True when arg1 is less than arg2" <|
+                \_ ->
+                    order.op A (<) B
+                        |> Expect.equal True
+            , test "(>=) returns True when arg1 is greater than arg2" <|
+                \_ ->
+                    order.op B (>=) A
+                        |> Expect.equal True
+            , test "(>=) returns True when args are equal" <|
+                \_ ->
+                    order.op A (>=) A
+                        |> Expect.equal True
+            , test "(>=) returns False when arg1 is less than arg2" <|
+                \_ ->
+                    order.op A (>=) B
+                        |> Expect.equal False
+            , test "(<=) returns False when arg1 is greater than arg2" <|
+                \_ ->
+                    order.op B (<=) A
+                        |> Expect.equal False
+            , test "(<=) returns True when arg1 is less than arg2" <|
+                \_ ->
+                    order.op A (<=) B
+                        |> Expect.equal True
+            , test "(<=) returns True when args are equal" <|
+                \_ ->
+                    order.op A (<=) A
+                        |> Expect.equal True
             ]
         , describe ".compare"
             [ test "returns EQ when arguments are equal" <|

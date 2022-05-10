@@ -1,4 +1,4 @@
-module Order exposing (makeInterface)
+module Order exposing (Interface, makeInterface)
 
 {-| REPLACEME
 
@@ -32,7 +32,7 @@ makeInterface toComparable =
 
 op : (a -> comparable) -> a -> (comparable -> comparable -> Bool) -> a -> Bool
 op toComparable arg1 operator arg2 =
-    operator (toComparable arg2) (toComparable arg1)
+    operator (toComparable arg1) (toComparable arg2)
 
 
 compare : (a -> comparable) -> a -> a -> Basics.Order
