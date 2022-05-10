@@ -1,6 +1,6 @@
 module Arithmetic exposing
     ( Interface
-    , Op(..)
+    , Op
     , add
     , div
     , makeFloatInterface
