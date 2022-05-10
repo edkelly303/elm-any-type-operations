@@ -32,7 +32,7 @@ import Review.Rule exposing (Rule)
 config : List Rule
 config =
     [ NoUnused.Modules.rule
-    , NoUnused.Exports.rule
+    --, NoUnused.Exports.rule
     , NoUnused.Dependencies.rule
     , NoUnused.CustomTypeConstructorArgs.rule
 
