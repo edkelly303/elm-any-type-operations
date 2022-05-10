@@ -1,0 +1,17 @@
+{
+  "name": "elm-any-type-operations",
+  "version": "0.0.1",
+  "description": "Automatically generate useful functions for common operations for Elm custom types",
+  "devDependencies": {
+    "elm-review": "2.7.2",
+    "elm-test": "0.19.1-revision7",
+    "elm-tooling": "1.8.0",
+    "elm-verify-examples": "5.2.0"
+  },
+  "scripts": {
+    "test": "elm-verify-examples --run-tests && elm-test",
+    "postinstall": "elm-tooling install"
+  },
+  "author": "REPLACEME",
+  "license": "BSD-3-Clause"
+}
