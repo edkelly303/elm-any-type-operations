@@ -1,4 +1,7 @@
-module Enum exposing (Interface, makeInterface)
+module Enum exposing
+    ( Interface
+    , makeInterface
+    )
 
 import Order
 
@@ -15,8 +18,6 @@ type alias Interface enum =
     , last : enum
     , next : enum -> Maybe enum
     , previous : enum -> Maybe enum
-    , cycleNext : enum -> enum
-    , cyclePrevious : enum -> enum
     }
 
 
@@ -53,8 +54,6 @@ makeInterface first rest =
     , last = last first rest
     , next = next first rest
     , previous = previous first rest
-    , cycleNext = cycleNext first rest
-    , cyclePrevious = cyclePrevious first rest
     }
 
 
@@ -106,15 +105,3 @@ next first rest this =
                 else
                     Nothing
            )
-
-
-cyclePrevious : enum -> List enum -> enum -> enum
-cyclePrevious first rest this =
-    previous first rest this
-        |> Maybe.withDefault (last first rest)
-
-
-cycleNext : enum -> List enum -> enum -> enum
-cycleNext first rest this =
-    next first rest this
-        |> Maybe.withDefault first

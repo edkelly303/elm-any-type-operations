@@ -57,24 +57,4 @@ suite =
                     enum.previous A
                         |> Expect.equal Nothing
             ]
-        , describe ".cycleNext"
-            [ test "returns next item if there is one" <|
-                \_ ->
-                    enum.cycleNext B
-                        |> Expect.equal C
-            , test "returns first item if there is no next item" <|
-                \_ ->
-                    enum.cycleNext C
-                        |> Expect.equal A
-            ]
-        , describe ".cyclePrevious"
-            [ test "returns previous item if there is one" <|
-                \_ ->
-                    enum.cyclePrevious B
-                        |> Expect.equal A
-            , test "returns last item if there is no previous item" <|
-                \_ ->
-                    enum.cyclePrevious A
-                        |> Expect.equal C
-            ]
         ]
