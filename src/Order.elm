@@ -1,4 +1,14 @@
-module Order exposing (Interface, Op(..), makeInterface)
+module Order exposing
+    ( Interface
+    , Op
+    , eq
+    , gt
+    , gte
+    , lt
+    , lte
+    , makeInterface
+    , neq
+    )
 
 {-| REPLACEME
 
@@ -37,6 +47,36 @@ type Op
     | Lt
     | Gte
     | Lte
+
+
+eq : Op
+eq =
+    Eq
+
+
+neq : Op
+neq =
+    Neq
+
+
+gt : Op
+gt =
+    Gt
+
+
+lt : Op
+lt =
+    Lt
+
+
+gte : Op
+gte =
+    Gte
+
+
+lte : Op
+lte =
+    Lte
 
 
 op : (a -> comparable) -> a -> Op -> a -> Bool

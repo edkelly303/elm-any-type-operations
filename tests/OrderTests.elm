@@ -1,7 +1,7 @@
 module OrderTests exposing (suite)
 
 import Expect
-import Order exposing (Op(..))
+import Order exposing (eq, gt, gte, lt, lte, neq)
 import Test exposing (..)
 
 
@@ -35,67 +35,67 @@ suite =
         [ describe ".op"
             [ test "Eq returns True when arguments are equal" <|
                 \_ ->
-                    order.op A Eq A
+                    order.op A eq A
                         |> Expect.equal True
             , test "Eq returns False when arguments are not equal" <|
                 \_ ->
-                    order.op A Eq B
+                    order.op A eq B
                         |> Expect.equal False
             , test "Neq returns False when arguments are equal" <|
                 \_ ->
-                    order.op A Neq A
+                    order.op A neq A
                         |> Expect.equal False
             , test "Neq returns True when arguments are not equal" <|
                 \_ ->
-                    order.op A Neq B
+                    order.op A neq B
                         |> Expect.equal True
             , test "Gt returns True when arg1 is greater than arg2" <|
                 \_ ->
-                    order.op B Gt A
+                    order.op B gt A
                         |> Expect.equal True
             , test "Gt returns False when arg1 is less than arg2" <|
                 \_ ->
-                    order.op A Gt B
+                    order.op A gt B
                         |> Expect.equal False
             , test "Gt returns False when args are equal" <|
                 \_ ->
-                    order.op A Gt A
+                    order.op A gt A
                         |> Expect.equal False
             , test "Lt returns False when arg1 is greater than arg2" <|
                 \_ ->
-                    order.op B Lt A
+                    order.op B lt A
                         |> Expect.equal False
             , test "Lt returns False when args are equal" <|
                 \_ ->
-                    order.op A Lt A
+                    order.op A lt A
                         |> Expect.equal False
             , test "Lt returns True when arg1 is less than arg2" <|
                 \_ ->
-                    order.op A Lt B
+                    order.op A lt B
                         |> Expect.equal True
             , test "Gte returns True when arg1 is greater than arg2" <|
                 \_ ->
-                    order.op B Gte A
+                    order.op B gte A
                         |> Expect.equal True
             , test "Gte returns True when args are equal" <|
                 \_ ->
-                    order.op A Gte A
+                    order.op A gte A
                         |> Expect.equal True
             , test "Gte returns False when arg1 is less than arg2" <|
                 \_ ->
-                    order.op A Gte B
+                    order.op A gte B
                         |> Expect.equal False
             , test "Lte returns False when arg1 is greater than arg2" <|
                 \_ ->
-                    order.op B Lte A
+                    order.op B lte A
                         |> Expect.equal False
             , test "Lte returns True when arg1 is less than arg2" <|
                 \_ ->
-                    order.op A Lte B
+                    order.op A lte B
                         |> Expect.equal True
             , test "Lte returns True when args are equal" <|
                 \_ ->
-                    order.op A Lte A
+                    order.op A lte A
                         |> Expect.equal True
             ]
         , describe ".compare"
