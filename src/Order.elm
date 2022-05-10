@@ -1,4 +1,4 @@
-module Order exposing (Interface, makeInterface)
+module Order exposing (Interface, Op(..), makeInterface)
 
 {-| REPLACEME
 
@@ -7,8 +7,8 @@ module Order exposing (Interface, makeInterface)
 -}
 
 
-type alias Interface a comparable =
-    { op : a -> (comparable -> comparable -> Bool) -> a -> Bool
+type alias Interface a =
+    { op : a -> Op -> a -> Bool
     , compare : a -> a -> Basics.Order
     , greater : a -> a -> a
     , lesser : a -> a -> a
@@ -19,7 +19,7 @@ type alias Interface a comparable =
 
 {-| REPLACEME
 -}
-makeInterface : (a -> comparable) -> Interface a comparable
+makeInterface : (a -> comparable) -> Interface a
 makeInterface toComparable =
     { op = op toComparable
     , compare = compare toComparable
@@ -30,9 +30,40 @@ makeInterface toComparable =
     }
 
 
-op : (a -> comparable) -> a -> (comparable -> comparable -> Bool) -> a -> Bool
+type Op
+    = Eq
+    | Neq
+    | Gt
+    | Lt
+    | Gte
+    | Lte
+
+
+op : (a -> comparable) -> a -> Op -> a -> Bool
 op toComparable arg1 operator arg2 =
-    operator (toComparable arg1) (toComparable arg2)
+    opToFunction operator (toComparable arg1) (toComparable arg2)
+
+
+opToFunction : Op -> (comparable -> comparable -> Bool)
+opToFunction operator =
+    case operator of
+        Eq ->
+            (==)
+
+        Neq ->
+            (/=)
+
+        Gt ->
+            (>)
+
+        Lt ->
+            (<)
+
+        Gte ->
+            (>=)
+
+        Lte ->
+            (<=)
 
 
 compare : (a -> comparable) -> a -> a -> Basics.Order

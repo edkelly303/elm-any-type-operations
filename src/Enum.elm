@@ -4,7 +4,7 @@ import Order
 
 
 type alias Interface enum =
-    { op : enum -> (Int -> Int -> Bool) -> enum -> Bool
+    { op : enum -> Order.Op -> enum -> Bool
     , compare : enum -> enum -> Basics.Order
     , greater : enum -> enum -> enum
     , lesser : enum -> enum -> enum
