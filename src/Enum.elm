@@ -3,8 +3,8 @@ module Enum exposing (Interface, makeInterface)
 import Order
 
 
-type alias Interface enum comparable =
-    { op : enum -> (comparable -> comparable -> Bool) -> enum -> Bool
+type alias Interface enum =
+    { op : enum -> (Int -> Int -> Bool) -> enum -> Bool
     , compare : enum -> enum -> Basics.Order
     , greater : enum -> enum -> enum
     , lesser : enum -> enum -> enum
@@ -20,7 +20,7 @@ type alias Interface enum comparable =
     }
 
 
-makeInterface : enum -> List enum -> Interface enum Int
+makeInterface : enum -> List enum -> Interface enum
 makeInterface first rest =
     let
         idxList =

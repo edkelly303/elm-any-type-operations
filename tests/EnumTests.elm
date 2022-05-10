@@ -11,7 +11,7 @@ type A
     | C
 
 
-enum : Enum.Interface A Int
+enum : Enum.Interface A
 enum =
     Enum.makeInterface A [ B, C ]
 
