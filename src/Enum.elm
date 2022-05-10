@@ -1,4 +1,4 @@
-module Enum exposing (..)
+module Enum exposing (Interface, makeInterface)
 
 import Order
 
