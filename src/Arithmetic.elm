@@ -1,5 +1,6 @@
 module Arithmetic exposing
-    ( Interface
+    ( Config
+    , Interface
     , Op
     , add
     , div
