@@ -79,8 +79,16 @@ makeIntegerInterface { toInt, fromInt } =
         , sub = calc (-)
         , mul = calc (*)
         , div = calc (//)
-        , div0 = if arg2 == 0 then fromInt 0 else calc (//)
-        , divM = if arg2 == 0 then fromInt minInt else calc (//)
+        , div0 = \arg1 arg2 -> 
+            if toInt arg2 == 0 then 
+                fromInt 0 
+            else 
+                calc (//) arg1 arg2
+        , divM = \arg1 arg2 -> 
+            if toInt arg2 == 0 then 
+                fromInt lowestNumber 
+            else 
+                calc (//) arg1 arg2
         }
 
 
@@ -96,8 +104,16 @@ makeFloatInterface { toFloat, fromFloat } =
         , sub = calc (-)
         , mul = calc (*)
         , div = calc (/)
-        , div0 = if arg2 == 0.0 then fromInt 0.0 else calc (/)
-        , divM = if arg2 == 0.0 then fromInt minInt else calc (/)
+        , div0 = \arg1 arg2 -> 
+            if toFloat arg2 == 0.0 then 
+                fromFloat 0.0 
+            else 
+                calc (/) arg1 arg2
+        , divM = \arg1 arg2 -> 
+            if toFloat arg2 == 0.0 then 
+                fromFloat lowestNumber 
+            else 
+                calc (/) arg1 arg2
         }
 
 
@@ -132,5 +148,5 @@ op c arg1 operator arg2 =
     opFn arg1 arg2
 
 
-minInt : Int
-minInt = -2147483648
+lowestNumber : number
+lowestNumber = -2147483648
