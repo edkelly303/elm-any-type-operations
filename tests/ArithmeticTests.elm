@@ -1,6 +1,6 @@
 module ArithmeticTests exposing (suite)
 
-import Arithmetic exposing (add, div, mul, sub)
+import Arithmetic exposing (add, div, div0, divM, mul, sub)
 import Expect
 import Test exposing (..)
 
