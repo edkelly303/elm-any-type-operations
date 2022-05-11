@@ -21,9 +21,9 @@ Or you want to perform some kind of mathematical operations on them using
 arithmetic operators like `+` or `*`. But they aren't `number`s. So you can't.
 
 This package provides a cheap way to define a bunch of functions that allow you 
-to treat custom operators _almost_ like `comparable` or `number` types.
+to treat custom types _almost_ like `comparable` or `number` types.
 
-## Are these... _typeclasses_?
+## Are these like... _typeclasses_?
 
 I don't think so ¯\\\_(ツ)\_/¯ 
 
