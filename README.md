@@ -17,8 +17,9 @@ Sometimes you define a custom type, and you really want it to be `comparable` so
 that you can use comparison operators like `<` or `>=`. But it isn't. So you 
 can't. 
 
-Or you want to perform some kind of mathematical operations on them using 
-arithmetic operators like `+` or `*`. But they aren't `number`s. So you can't.
+Or you want to perform some kind of mathematical calculations with your types 
+using arithmetic operators like `+` or `*`. But they aren't `number`s. So you 
+can't.
 
 This package provides a cheap way to define a bunch of functions that allow you 
 to treat custom types _almost_ like `comparable` or `number` types.
