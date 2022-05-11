@@ -10,11 +10,11 @@ module Enum exposing
     , lte
     )
 
-{-| The Enum module allows you to generate a bunch of useful functions that you
-can use to work with custom types that have a finite number of variants, aka
-Enums.
+{-| The `Enum` module allows you to generate a bunch of useful functions (an
+`Interface`) that you can use to work with custom types that have a finite number
+of variants, aka enums.
 
-For example, this is an Enum:
+For example, this is an enum:
 
     type Season
         = Spring
@@ -24,7 +24,7 @@ For example, this is an Enum:
 
 Because it only has a finite number of possible values (4).
 
-This _isn't_ an Enum:
+This _isn't_ an enum:
 
     type Id
         = Id Int
@@ -32,14 +32,14 @@ This _isn't_ an Enum:
 Because there is an infinite series of integers, so you can't fully enumerate
 all the values of this type.
 
-The Enum module gives you all the same functions as the Order module, plus a few
-extra ones that may come in handy when working with Enums.
+The `Enum` module gives you all the same functions as the `Order` module, plus a few
+extra ones that may come in handy when working with enums.
 
 
-# Interface
+## What is an Interface?
 
 An `Interface` is just a record containing functions that you can apply to your
-Enum types.
+enum types.
 
 The type signature might look daunting, but in practice you can ignore it.
 All you need to remember is that if you create an `Interface` called `enum`,
@@ -57,12 +57,18 @@ you can call the functions within it by doing `enum.all`, `enum.first`,
     thisIsTrue =
         enum.next A == Just B
 
+
+## Interface type
+
 @docs Interface
+
+
+## Creating an Interface
 
 @docs makeInterface
 
 
-# Operators
+## Operators
 
 @docs Op
 
@@ -83,9 +89,11 @@ you can call the functions within it by doing `enum.all`, `enum.first`,
 import Order
 
 
-{-| The `Interface` type is a record of functions that you can use to compare
-the values of your custom types, even though Elm's custom types are not
+{-| The `Interface` type is a record containing functions that you can use to
+compare the values of your custom types, even though Elm's custom types are not
 `comparable`.
+
+The available functions are:
 
 
 ## `op`
@@ -162,28 +170,28 @@ The equivalent of `List.minimum`
 
 ## `all`
 
-Returns a list of all the values of the Enum, in order from least to greatest
+Returns a list of all the values of the enum, in order from least to greatest
 
     enum.all == [ A, B, C ]
 
 
 ## `first`
 
-Returns the first (least) value of the Enum
+Returns the first (least) value of the enum
 
     enum.first == A
 
 
 ## `last`
 
-Returns the last (greatest) value of the Enum
+Returns the last (greatest) value of the enum
 
     enum.last == C
 
 
 ## `next`
 
-Given a value of the Enum, returns the next (greater) value, or Nothing if no greater value exists
+Given a value of the enum, returns the next (greater) value, or Nothing if no greater value exists
 
     enum.next B == Just C
 
@@ -192,7 +200,7 @@ Given a value of the Enum, returns the next (greater) value, or Nothing if no gr
 
 ## `previous`
 
-Given a value of the Enum, returns the previous (lesser) value, or Nothing if no lesser value exists
+Given a value of the enum, returns the previous (lesser) value, or Nothing if no lesser value exists
 
     enum.previous B == Just A
 
@@ -215,11 +223,11 @@ type alias Interface enum =
 
 
 {-| To define an `Interface`, you just need to supply all the values of the
-Enum, in order from least to greatest.
+enum, in order from least to greatest.
 
-It only makes sense to treat a custom type as an Enum if it has two or more
-variants, so the API for `makeInterface` requires you to supply at least two 
-values as the first two arguments. If there are more than two values, you can 
+It only makes sense to treat a custom type as an enum if it has two or more
+variants, so the API for `makeInterface` requires you to supply at least two
+values as the first two arguments. If there are more than two values, you can
 put the rest in a list as the third argument.
 
     type Season
@@ -335,7 +343,7 @@ type alias Op =
     Order.Op
 
 
-{-| The equal operator, equivalent to `(==)`. (This is re-exported from the
+{-| The equal-to operator, equivalent to `(==)`. (This is re-exported from the
 `Order` module for convenience.)
 -}
 eq : Order.Op
@@ -343,7 +351,7 @@ eq =
     Order.eq
 
 
-{-| The not-equal operator, equivalent to `(/=)`. (This is re-exported from the
+{-| The not-equal-to operator, equivalent to `(/=)`. (This is re-exported from the
 `Order` module for convenience.)
 -}
 neq : Order.Op

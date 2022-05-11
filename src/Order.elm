@@ -10,15 +10,15 @@ module Order exposing
     , lte
     )
 
-{-| The Order module allows you to generate a bunch of useful functions that you
-can use to compare the custom types or record types that you define in your Elm
-applications.
+{-| The `Order` module allows you to generate a bunch of useful functions (an
+`Interface`) that you can use to compare the custom types or record types that you
+define in your Elm applications.
 
 These functions will work even though custom types and record types are not
 included in Elm's built-in `comparable` typeclass.
 
 
-# Interface
+## What is an Interface?
 
 An `Interface` is just a record containing functions that can be used to
 compare your custom types.
@@ -51,12 +51,18 @@ and so on:
     thisIsTrue =
         order.greater A B == B
 
+
+## Interface type
+
 @docs Interface
+
+
+## Creating an interface
 
 @docs makeInterface
 
 
-# Operators
+## Operators
 
 @docs Op
 
@@ -75,9 +81,11 @@ and so on:
 -}
 
 
-{-| The `Interface` type is a record of functions that you can use to compare
-the values of your custom types, even though Elm's custom types are not
+{-| The `Interface` type is a record containing functions that you can use to
+compare the values of your custom types, even though Elm's custom types are not
 `comparable`.
+
+The available functions are:
 
 
 ## `op`
@@ -168,29 +176,29 @@ your custom type to a `comparable` (i.e. a `String`, `Int` or `Float`, or a
 
 Here's an example for "enum" types
 
-    type Colour
-        = Red
-        | Green
-        | Blue
+    type Animal
+        = Aardvark
+        | Bear
+        | Capybara
 
-    colourToString : Example -> String
-
-    toString example =
+    animalToString : Animal -> String
+    animalToString example =
         case example of
-            Green ->
-                "green"
+            Aardvark ->
+                "aardvark"
 
-            Blue ->
-                "blue"
+            Bear ->
+                "bear"
 
-            Red ->
-                "red"
+            Capybara ->
+                "capybara"
 
-    colourOrder =
-        Order.makeInterface colourToString
+    order : Interface Animal
+    order =
+        Order.makeInterface animalToString
 
     thisIsTrue =
-        colourOrder.op Red neq Blue == True
+        order.op Aardvark lte Bear == True
 
 And here's an example for "wrapper" types
 
@@ -201,11 +209,17 @@ And here's an example for "wrapper" types
     wrapperToInt (Wrapper int) =
         int
 
-    wrapperOrder =
+    order : Order Wrapper
+    order =
         Order.makeInterface wrapperToInt
 
     thisIsTrueToo =
-        wrapperOrder.greatest [ Wrapper 1, Wrapper 2, Wrapper 3 ] == Just (Wrapper 3)
+        order.greatest
+            [ Wrapper 1
+            , Wrapper 2
+            , Wrapper 3
+            ]
+            == Just (Wrapper 3)
 
 -}
 makeInterface : (a -> comparable) -> Interface a
@@ -231,14 +245,14 @@ type Op
     | Lte
 
 
-{-| The equal operator, equivalent to `(==)`
+{-| The equal-to operator, equivalent to `(==)`
 -}
 eq : Op
 eq =
     Eq
 
 
-{-| The not-equal operator, equivalent to `(/=)`
+{-| The not-equal-to operator, equivalent to `(/=)`
 -}
 neq : Op
 neq =

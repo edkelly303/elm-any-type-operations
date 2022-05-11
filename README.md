@@ -1,17 +1,30 @@
-# `replaceme` [![Build Status](https://github.com/replaceme/replaceme/workflows/CI/badge.svg)](https://github.com/replaceme/replaceme/actions?query=branch%3Amain)
+# Any-type operations
 
-## What this repo includes
+## What?
 
-| What                                                              | Why?                                                                                                                                                                                                          |
-| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| lydell/elm-tooling.json                                           | Install dependencies, cache them for faster GitHub Actions builds.                                                                                                                                            |
-| elm-test                                                          | Basic unit testing boilerplate and runs on GitHub Actions.                                                                                                                                                    |
-| [`jfmengels/elm-review`](https://github.com/jfmengels/elm-review) | Statically analyzes your code to find unused code, etc.                                                                                                                                                       |
-| dillonkearns/elm-publish-action                                   | Publishes your package whenever you bump your package version in elm.json on your default branch (`main` or `master`). It won't publish 1.0.0 for you, but it will release subsequent versions automatically. |
+`Order` allows you to define comparison functions quickly for your custom types.
+Look at the `Order` module first to see how this works.
 
-## Checklist
+`Enum` builds on `Order` with some additional useful functions for custom types 
+that have a finite number of variants.
 
-- [ ] Replace this with a nice readme (see this guide for designing Elm packages and writing nice docs/READMEs: <https://github.com/dillonkearns/idiomatic-elm-package-guide>)
-- [ ] Find all instances of replaceme in this repo and replace them
-- [ ] Publish version 1.0.0 (you have to start at V1 with Elm packages). Run `elm publish` from the root folder of this repo when you're all ready, and it will walk you through the process!
-- [ ] Add a file called `LICENSE` to the top-level folder. This is required to publish an Elm package. The most common and recommended license for open source Elm packages is BSD-3.
+`Arithmetic` lets you define arithmetic operations for your custom types. (I'm 
+less convinced that this one is actually useful).
+
+## Why?
+
+Sometimes you define a custom type, and you really want it to be `comparable` so 
+that you can use comparison operators like `<` or `>=`. But it isn't. So you 
+can't. 
+
+Or you want to perform some kind of mathematical operations on them using 
+arithmetic operators like `+` or `*`. But they aren't `number`s. So you can't.
+
+This package provides a cheap way to define a bunch of functions that allow you 
+to treat custom operators _almost_ like `comparable` or `number` types.
+
+## Are these... _typeclasses_?
+
+I don't think so ¯\\\_(ツ)\_/¯ 
+
+Hopefully, they are still useful though.
