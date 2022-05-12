@@ -8,8 +8,6 @@ module Arithmetic exposing
     , sub
     , mul
     , div
-    , div0
-    , divM
     )
 
 {-| The `Arithmetic` module allows you to generate a function (`Interface`) that you
@@ -65,10 +63,6 @@ as follows:
 
 @docs div
 
-@docs div0
-
-@docs divM
-
 -}
 
 
@@ -89,8 +83,6 @@ type Op
     | Sub
     | Mul
     | Div
-    | Div0
-    | DivM
 
 
 {-| Equivalent to `(+)`, or whatever the equivalent addition operation should be
@@ -137,33 +129,6 @@ div =
     Div
 
 
-{-| Equivalent to `(//)` or `(/)`, or whatever the equivalent division operation
-should be for your type, except that division by zero returns zero.
-
-    arith (Length 6) div0 (Length 2) == Length 3
-
-    arith (Length 6) div0 (Length 0) == Length 0
-
--}
-div0 : Op
-div0 =
-    Div0
-
-
-{-| Equivalent to `(//)` or `(/)`, or whatever the equivalent division operation
-should be for your type, except that division by zero returns the lowest
-negative number.
-
-    arith (Length 6) divM (Length 2) == Length 3
-
-    arith (Length 6) divM (Length 0) == Length -2147483648
-
--}
-divM : Op
-divM =
-    DivM
-
-
 {-| Create an interface that can perform integer arithmetic on your custom type.
 
     arith =
@@ -182,18 +147,6 @@ This gives you the following possibilities:
 
     arith (Length 6) div (Length 2) == Length 3
 
-There are also two other variants of `div`, called `div0` and `divM`.
-These behave the same as `div`, except in their handling of division by zero.
-
-    -- `div`: division by zero causes a runtime exception
-    arith (Length 6) div (Length 0) == Debug.todo "CRASH!"
-
-    -- `div0`: division by zero returns zero
-    arith (Length 6) div0 (Length 0) == Length 0
-
-    -- `divM`: division by zero returns Elm's minimum integer
-    arith (Length 6) divM (Length 0) == Length -2147483648
-
 -}
 makeIntegerInterface : { toInt : a -> Int, fromInt : Int -> a } -> Interface a
 makeIntegerInterface { toInt, fromInt } =
@@ -207,20 +160,6 @@ makeIntegerInterface { toInt, fromInt } =
         , sub = calc (-)
         , mul = calc (*)
         , div = calc (//)
-        , div0 =
-            \arg1 arg2 ->
-                if toInt arg2 == 0 then
-                    fromInt 0
-
-                else
-                    calc (//) arg1 arg2
-        , divM =
-            \arg1 arg2 ->
-                if toInt arg2 == 0 then
-                    fromInt lowestInt
-
-                else
-                    calc (//) arg1 arg2
         }
 
 
@@ -245,21 +184,6 @@ This gives you the following possibilities:
 
     arith (Width 6.0) div (Width 2.0) == Width 3.0
 
-There are also two other variants of `div`, called `div0` and `divM`.
-These behave the same as `div`, except in their handling of division by zero.
-
-    -- `div`: dividing a non-zero number by zero returns Infinity
-    arith (Width 1.0) div (Width 0.0) == Width Infinity
-
-    -- `div`: dividing zero by zero returns NaN
-    arith (Width 0.0) div (Width 0.0) == Width NaN
-
-    -- `div0`: division by zero returns zero
-    arith (Width 6.0) div0 (Width 0.0) == Width 0.0
-
-    -- `divM`: division by zero returns Elm's minimum float
-    arith (Width 6.0) divM (Width 0.0) == Width -1.79e308
-
 -}
 makeFloatInterface : { toFloat : a -> Float, fromFloat : Float -> a } -> Interface a
 makeFloatInterface { toFloat, fromFloat } =
@@ -273,43 +197,22 @@ makeFloatInterface { toFloat, fromFloat } =
         , sub = calc (-)
         , mul = calc (*)
         , div = calc (/)
-        , div0 =
-            \arg1 arg2 ->
-                if toFloat arg2 == 0.0 then
-                    fromFloat 0.0
-
-                else
-                    calc (/) arg1 arg2
-        , divM =
-            \arg1 arg2 ->
-                if toFloat arg2 == 0.0 then
-                    fromFloat lowestFloat
-
-                else
-                    calc (/) arg1 arg2
         }
 
 
 {-| A more generic way to create an Interface, which you might need to use if
 you want to define your own custom arithmetic rules.
 
-As a silly example, here's a way to reimplement Elm's integer arithmetic and
-supplement it with `div0` and `divM`:
+As an example, here's a way to reimplement integer arithmetic, but with 
+a alternative division operator that returns Elm's minimum integer 
+(-2147483648) when you divide by zero, instead of raising a runtime exception:
 
     arith =
         makeInterface
             { add = (+)
             , sub = (-)
             , mul = (*)
-            , div = (//)
-            , div0 =
-                \a1 a2 ->
-                    if a2 == 0 then
-                        0
-
-                    else
-                        a1 // a2
-            , divM =
+            , div =
                 \a1 a2 ->
                     if a2 == 0 then
                         -2147483648
@@ -319,7 +222,7 @@ supplement it with `div0` and `divM`:
             }
 
     thisIsTrue =
-        arith 10 div0 2 == 5
+        arith 1 div 0 == -2147483648
 
 -}
 makeInterface :
@@ -327,8 +230,6 @@ makeInterface :
     , sub : a -> a -> a
     , mul : a -> a -> a
     , div : a -> a -> a
-    , div0 : a -> a -> a
-    , divM : a -> a -> a
     }
     -> Interface a
 makeInterface config =
@@ -340,8 +241,6 @@ op :
     , sub : a -> a -> a
     , mul : a -> a -> a
     , div : a -> a -> a
-    , div0 : a -> a -> a
-    , divM : a -> a -> a
     }
     -> a
     -> Op
@@ -362,21 +261,5 @@ op c arg1 operator arg2 =
 
                 Div ->
                     c.div
-
-                Div0 ->
-                    c.div0
-
-                DivM ->
-                    c.divM
     in
     opFn arg1 arg2
-
-
-lowestInt : Int
-lowestInt =
-    -2147483648
-
-
-lowestFloat : Float
-lowestFloat =
-    -1.79e308
