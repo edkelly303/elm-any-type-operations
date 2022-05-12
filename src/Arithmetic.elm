@@ -204,7 +204,7 @@ makeFloatInterface { toFloat, fromFloat } =
 you want to define your own custom arithmetic rules.
 
 As an example, here's a way to reimplement integer arithmetic, but with 
-a alternative division operator that returns Elm's minimum integer 
+an alternative division operator that returns Elm's minimum integer 
 (-2147483648) when you divide by zero, instead of raising a runtime exception:
 
     arith =
